@@ -1,0 +1,36 @@
+{% include 'layouts/admin_header.html' %}
+<section class="hero-newsletters">
+    <div class="hero-overlay black"></div>
+    <div class="title-container black">
+        <h1>Events</h1>
+    </div>
+</section>
+
+<div class="events-containter">
+    <table>
+    {% for event in events %}
+        <tr class="event-row">
+            <td class="event-title">
+                {{event.name}}
+            </td>
+            <td class = "event-description">
+                {% if event.description %}
+                    {{event.description}}
+                {% else %}
+                    No Description
+                {% endif %}
+            </td>
+            <td class="event-date">{{event.date}}</td>
+            <td class="event-location">{{event.location}}</td>
+            <td> <a href= "{{url_for('admin.delete_event', event_id=event.id)}}" class ="btn red" onclick="return confirm('Are you sure you want to delete {{ event.name }}?');">Delete</a></td>
+            <td> <a href= "{{url_for('admin.edit_event', event_id=event.id)}}" class ="btn btn-edit">Edit</a></td>
+        </tr>
+    {% endfor %}
+    </table>
+</div>
+
+<div class="btn-container btn-add">
+  <a href="{{url_for('admin.add_event') }}" class="btn">Add an Event</a>
+</div>
+
+{% include 'layouts/admin_footer.html' %}

@@ -1,0 +1,87 @@
+{% include 'layouts/header.html' %}
+<script src="https://cdn.tailwindcss.com"></script>
+
+<section class="hero-projects">
+  <div class="hero-overlay red"></div>
+  <div class="title-container red">
+    <h1 class="text-4xl font-bold">Our Projects</h1>
+  </div>
+</section>
+
+<main class="container mx-auto px-4 py-8">
+  {% if project_data %}
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+      {% for entry in project_data %}
+        {% set project = entry.project %}
+        {% set images = entry.images %}
+
+        <div class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-xl transition-shadow duration-300">
+
+            <!-- Splide Carousel -->
+            {% if images %}
+                {% if images|length == 1 %}
+                    <!-- Single Image: show as static image -->
+                    <div class="w-full h-48 bg-gray-200 flex items-center justify-center">
+                    <img src="{{ url_for('static', filename=images[0]) }}" alt="{{ project.title }} image" class="w-full h-48 object-cover" />
+                    </div>
+                {% else %}
+                    <!-- Multiple images: Splide carousel -->
+                    <div id="splide-{{ project.id }}" class="splide">
+                        <div class="splide__track">
+                            <ul class="splide__list">
+                            {% for img in images %}
+                                <li class="splide__slide">
+                                <img src="{{ url_for('static', filename=img) }}" alt="{{ project.title }} image" class="w-full h-48 object-cover">
+                                </li>
+                            {% endfor %}
+                            </ul>
+                        </div>
+                    </div>
+                {% endif %}
+            {% else %}
+            <div class="w-full h-48 bg-gray-200 flex items-center justify-center">
+                <span class="text-gray-500 text-sm">No Images Available</span>
+            </div>
+            {% endif %}
+
+
+          <!-- Project Details -->
+          <div class="p-4">
+            <h2 class="text-xl font-semibold text-gray-800 mb-2">{{ project.title }}</h2>
+            <div class="flex justify-between items-start gap-4">
+              <p class="text-gray-600 line-clamp-3 flex-grow">
+                {{ project.about if project.about else 'No description available' }}
+              </p>
+              <a href="{{ url_for('main.view_project', project_id=project.id) }}" class="btn">
+                See More
+              </a>
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  {% else %}
+    <div class="text-center py-12">
+      <p class="text-gray-600 text-lg">No projects found.</p>
+    </div>
+  {% endif %}
+</main>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    document.querySelectorAll('.splide').forEach(slider => {
+        // Only initialize if more than one slide
+        if (slider.querySelectorAll('.splide__slide').length > 1) {
+        new Splide(slider, {
+            type: 'loop',
+            height: '12rem',
+            perPage: 1,
+            autoplay: true,
+            pagination: true,
+        }).mount();
+        }
+    });
+    });
+</script>
+
+{% include 'layouts/footer.html' %}

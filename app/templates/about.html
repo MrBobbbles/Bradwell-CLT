@@ -1,0 +1,14 @@
+{% include 'layouts/header.html' %}
+
+  <section class="hero-about">
+
+    <div class="title-container">
+      <h1>About Us</h1>
+    </div>
+    <div class="about-buttons">
+      <a href="{{ url_for('main.what_is_clt') }}" class="about-btn">What is a CLT?</a>
+      <a href="{{ url_for('main.board') }}" class="about-btn">Board of Directors</a>
+    </div>
+  </section>
+
+{% include 'layouts/footer.html' %}

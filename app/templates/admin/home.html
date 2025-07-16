@@ -1,0 +1,16 @@
+{% include 'layouts/admin_header.html' %}
+<h1>Admin View</h1>
+
+  <section class="hero-admin">
+
+    <div class="title-container">
+      <h1>Admin View</h1>
+    </div>
+    <div class="about-buttons">
+      <a href="{{ url_for('admin.people') }}" class="about-btn">People</a>
+      <a href="{{ url_for('admin.events') }}" class="about-btn">Events</a>
+      <a href="{{ url_for('admin.projects') }}" class="about-btn">Projects</a>
+      <a href="{{ url_for('admin.newsletters') }}" class="about-btn">Newsletters</a>
+    </div>
+  </section>
+{% include 'layouts/admin_footer.html' %}

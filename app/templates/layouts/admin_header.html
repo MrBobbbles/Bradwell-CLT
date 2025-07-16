@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Bradwell Community Land Trust</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='admin.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='scroll.css') }}">
+
+</head>
+<body>
+  <div class="page-wrapper">
+    <div class="page-content">
+    <!-- Navigation -->
+      <header>
+        <nav class="navbar">
+          <a href="{{ url_for('admin.home') }}">
+                <img class= "blct-logo" src="{{ url_for('static', filename='images/Bradwell-Community-Land-Trust-colour.png') }}" alt="BCLT Logo">
+          </a>      
+            <ul class="nav-links">
+            <li><a href="{{ url_for('main.home') }}">View site</a></li>
+            <li><a href="{{ url_for('admin.projects') }}">Projects</a></li>
+            <li><a href="{{ url_for('admin.events') }}">Events</a></li>
+            <li><a href="{{ url_for('admin.newsletters') }}">Newsletters</a></li>
+            <li><a href="{{ url_for('admin.people') }}">People</a></li>
+            <li><a href="{{ url_for('auth.logout') }}">Log out</a></li>
+          </ul>
+          
+          <div class="hamburger">
+            <span></span><span></span><span></span>
+          </div>
+        </nav>
+      </header>

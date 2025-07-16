@@ -1,0 +1,54 @@
+{% include 'layouts/admin_header.html' %}
+<h1>Admin View</h1>
+
+<h2>Add a Project</h2>
+
+<form action="{{ url_for('admin.add_project') }}" method="POST" enctype="multipart/form-data" style="max-width: 700px; margin: 0 auto;">
+  <div style="margin-bottom: 1rem;">
+    <label for="title">Title:</label><br>
+    <input type="text" name="title" id="title" required class="form-control" style="width: 100%; padding: 0.5rem;" />
+  </div>
+
+  <div style="margin-bottom: 1rem;">
+    <label for="about">About:</label><br>
+    <textarea name="about" id="about" class="form-control" rows="3" style="width: 100%; padding: 0.5rem;"></textarea>
+  </div>
+
+  <h3>Paragraphs</h3>
+  <div id="paragraph-container">
+    <div class="paragraph" data-index="0" style="margin-bottom: 1rem;">
+      <label>Paragraph Text:</label>
+      <textarea name="paragraphs[0][text]" class="form-control" rows="3" style="width: 100%; padding: 0.5rem;" ></textarea>
+
+      <label>Paragraph Image:</label>
+      <input type="file" name="paragraphs[0][image]" class="form-control" />
+    </div>
+  </div>
+
+  <button type="button" onclick="addParagraph()" class="btn btn-secondary">New Paragraph</button>
+  <button type="submit" class="btn btn-primary">Add Project</button>
+</form>
+
+<script>
+let paragraphIndex = 1;
+
+function addParagraph() {
+  const container = document.getElementById('paragraph-container');
+  const div = document.createElement('div');
+  div.classList.add('paragraph');
+  div.setAttribute('data-index', paragraphIndex); 
+
+  div.innerHTML = `
+    <label>Paragraph Text:</label>
+    <textarea name="paragraphs[${paragraphIndex}][text]" class="form-control" rows="3" style="width: 100%; padding: 0.5rem;"></textarea>
+
+    <label>Paragraph Image:</label>
+    <input type="file" name="paragraphs[${paragraphIndex}][image]" class="form-control " />
+  `;
+
+  container.appendChild(div);
+  paragraphIndex++;
+}
+</script>
+
+{% include 'layouts/admin_footer.html' %}

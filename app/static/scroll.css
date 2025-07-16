@@ -1,0 +1,381 @@
+/* Enhanced scroll animations for Bradwell CLT website */
+
+/* Animate On Scroll Base Styles */
+.scroll-reveal,
+.scroll-item {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.8s cubic-bezier(0.5, 0, 0, 1), 
+              transform 0.8s cubic-bezier(0.5, 0, 0, 1);    
+  will-change: opacity, transform;
+}
+
+.scroll-reveal.revealed,
+.scroll-item.revealed {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Different animation types */
+.fade-up {
+  transform: translateY(30px);
+}
+
+.fade-right {
+  transform: translateX(-30px);
+}
+
+.fade-left {
+  transform: translateX(30px);
+}
+
+.zoom-in {
+  transform: scale(0.9);
+}
+
+.slide-up {
+  transform: translateY(50px);
+}
+
+/* Transformed state for all animations */
+.fade-up.revealed,
+.fade-right.revealed,
+.fade-left.revealed,
+.zoom-in.revealed,
+.slide-up.revealed {
+  transform: translate(0) scale(1);
+}
+
+/* Staggered animation control */
+.stagger-reveal > * {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.stagger-reveal > *.revealed {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Parallax elements */
+.parallax {
+  will-change: transform;
+  transition: transform 0.1s linear;
+}
+
+/* Enhanced navbar styles */
+.navbar {
+  transition: all 0.4s ease;
+}
+
+.navbar-scrolled {
+  padding: 0.6rem 2rem;
+  box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+}
+
+.navbar-solid {
+  background: rgba(255,255,255,0.95);
+}
+
+/* Enhanced card hover effects */
+.area-card, 
+.involvement-card,
+.news-card {
+  transform: translateY(0);
+  transition: all 0.5s cubic-bezier(0.25, 0.8, 0.25, 1);
+  will-change: transform, box-shadow;
+}
+
+.area-card:hover, 
+.involvement-card:hover,
+.news-card:hover {
+  transform: translateY(-15px);
+  box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+}
+
+/* 3D Tilt effect for cards */
+.tilt-effect {
+  transform: perspective(1000px) rotateX(0) rotateY(0);
+  transition: transform 0.3s ease;
+  will-change: transform;
+}
+
+/* Fix for areas section to make it more impactful */
+.key-areas {
+  position: relative;
+  overflow: hidden;
+}
+
+.key-areas::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, rgba(46, 125, 50, 0.05) 0%, rgba(255, 255, 255, 0) 50%);
+}
+
+/* Enhanced impact section styling */
+.impact-section {
+  position: relative;
+  overflow: hidden;
+}
+
+.impact-section::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 30%;
+  background: linear-gradient(to top, rgba(0,0,0,0.2), transparent);
+  pointer-events: none;
+}
+
+.stat-card {
+  transform: translateY(0);
+  transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  will-change: transform;
+}
+
+.stat-card:hover {
+  transform: translateY(-10px) scale(1.05);
+}
+
+.stat-number {
+  display: inline-block;
+  position: relative;
+  font-size: 3.5rem;
+  font-weight: bold;
+  background: linear-gradient(45deg, #ffffff, #e0f2e0);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 0.5rem;
+}
+
+/* Enhanced hero section */
+.hero {
+  position: relative;
+  overflow: hidden;
+  will-change: background-position;
+}
+
+
+
+.hero-content {
+  animation: fadeInUp 1.2s ease-out;
+}
+
+@keyframes fadeInUp {
+  from { 
+    opacity: 0; 
+    transform: translateY(60px); 
+  }
+  to { 
+    opacity: 1; 
+    transform: translateY(0); 
+  }
+}
+
+/* Testimonial enhancements */
+.testimonial-slide {
+  transition: all 0.4s ease;
+  will-change: transform, box-shadow;
+}
+
+.testimonial-slide:hover {
+  transform: scale(1.02);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+}
+
+.testimonial-quote {
+  position: relative;
+}
+
+.testimonial-quote::before,
+.testimonial-quote::after {
+  position: absolute;
+  font-size: 3rem;
+  line-height: 1;
+  opacity: 0.2;
+}
+
+.testimonial-quote::before {
+  content: '"';
+  left: -20px;
+  top: -10px;
+}
+
+.testimonial-quote::after {
+  content: '"';
+  right: -20px;
+  bottom: -30px;
+}
+
+/* Featured project enhancements */
+.featured-project {
+  position: relative;
+  overflow: hidden;
+  transition: all 0.5s ease;
+}
+
+.featured-project:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+}
+
+.project-image {
+  transition: all 1.5s ease;
+  will-change: transform;
+}
+
+.featured-project:hover .project-image {
+  transform: scale(1.05);
+}
+
+/* Button hover animations */
+.btn-primary,
+.btn-secondary,
+.btn-join {
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
+}
+
+.btn-primary::after,
+.btn-secondary::after,
+.btn-join::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(255,255,255,0.1);
+  transform: translateX(-100%);
+  transition: transform 0.4s ease;
+  z-index: -1;
+}
+
+.btn-primary:hover::after,
+.btn-secondary:hover::after,
+.btn-join:hover::after {
+  transform: translateX(0);
+}
+
+/* Custom animated border for sections */
+.section-title {
+  position: relative;
+}
+
+.section-title::after {
+  content: '';
+  display: block;
+  width: 0;
+  height: 3px;
+  background: currentColor;
+  margin: 0.8rem auto 0;
+  transition: width 1s ease;
+}
+
+.section-title.revealed::after {
+  width: 80px;
+}
+
+/* Newsletter form animation */
+.signup-form input {
+  transition: all 0.3s ease;
+}
+
+.signup-form input:focus {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(46, 125, 50, 0.2);
+  border-color: #2e7d32;
+}
+
+/* Fade in section backgrounds */
+.key-areas,
+.impact-section,
+.get-involved,
+.testimonials,
+.newsletter-signup {
+  position: relative;
+  overflow: hidden;
+}
+
+.bg-reveal {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+  opacity: 0;
+  transition: opacity 1s ease;
+  z-index: -1;
+}
+
+.bg-reveal.revealed {
+  opacity: 1;
+}
+
+/* Hamburger menu animation */
+.hamburger span {
+  transition: all 0.3s ease;
+}
+
+.hamburger.open span:nth-child(1) {
+  transform: translateY(7px) rotate(45deg);
+}
+
+.hamburger.open span:nth-child(2) {
+  opacity: 0;
+}
+
+.hamburger.open span:nth-child(3) {
+  transform: translateY(-7px) rotate(-45deg);
+}
+
+/* Improved nav-links animation for mobile */
+@media (max-width: 768px) {
+  .nav-links {
+    transform: translateX(100%);
+    transition: transform 0.4s cubic-bezier(0.77, 0.2, 0.05, 1.0);
+  }
+  
+  .nav-links.open {
+    transform: translateX(0);
+  }
+  
+  .nav-links a {
+    opacity: 0;
+    transform: translateX(20px);
+    transition: opacity 0.4s ease, transform 0.4s ease, color 0.3s ease;
+    transition-delay: 0s;
+  }
+  
+  .nav-links.open a {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  
+  .nav-links.open a:nth-child(1) {
+    transition-delay: 0.1s;
+  }
+  
+  .nav-links.open a:nth-child(2) {
+    transition-delay: 0.2s;
+  }
+  
+  .nav-links.open a:nth-child(3) {
+    transition-delay: 0.3s;
+  }
+  
+  .nav-links.open a:nth-child(4) {
+    transition-delay: 0.4s;
+  }
+}

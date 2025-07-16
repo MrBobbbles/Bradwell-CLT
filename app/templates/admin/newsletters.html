@@ -1,0 +1,35 @@
+{% include 'layouts/admin_header.html' %}
+<section class="hero-newsletters">
+    <div class="hero-overlay black"></div>
+    <div class="title-container black">
+        <h1>Newsletters</h1>
+    </div>
+</section>
+
+<div class="newsletters-containter">
+    <table>
+    {% for newsletter in newsletters %}
+        <tr class="newsletter-row">
+            <td class="newsletter-title">
+                <a href="{{url_for('static', filename = newsletter.filepath)}}" target = "_blank">{{newsletter.name}}</a>
+            </td>
+            <td class = "newsletter-description">
+                {% if newsletter.description %}
+                    {{newsletter.description}}
+                {% else %}
+                    No Description
+                {% endif %}
+            </td>
+            <td class = "newsletter-date">{{newsletter.date}}</td>
+            <td> <a href= "{{url_for('admin.delete_newsletter', newsletter_id=newsletter.id)}}" class ="btn red" onclick="return confirm('Are you sure you want to delete {{ newsletter.name }}?');">Delete</a></td>
+            <td> <a href= "{{url_for('admin.edit_newsletter', newsletter_id=newsletter.id)}}" class ="btn btn-edit">Edit</a></td>
+        </tr>
+    {% endfor %}
+    </table>
+</div>
+
+<div class="btn-container btn-add">
+  <a href="{{url_for('admin.add_newsletter') }}" class="btn btn-add">Add a newsletter</a>
+</div>
+
+{% include 'layouts/admin_footer.html' %}

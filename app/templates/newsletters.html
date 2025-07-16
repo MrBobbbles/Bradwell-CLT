@@ -1,0 +1,29 @@
+{% include 'layouts/header.html' %}
+<section class="hero-newsletters">
+    <div class="hero-overlay black"></div>
+    <div class="title-container black">
+        <h1>Newsletters</h1>
+    </div>
+</section>
+
+<div class="newsletters-containter">
+    <table>
+    {% for newsletter in newsletters %}
+        <tr class="newsletter-row">
+            <td class="newsletter-title">
+                <a href="{{url_for('static', filename = newsletter.filepath)}}" target = "_blank">{{newsletter.name}}</a>
+            </td>
+            <td class="newsletter-description">
+                {% if newsletter.description %}
+                    {{newsletter.description}}
+                {% else %}
+                    No Description
+                {% endif %}
+            </td>
+            <td class = "newsletter-date">{{newsletter.date}}</td>
+        </tr>
+    {% endfor %}
+    </table>
+</div>
+
+{% include 'layouts/footer.html' %}

@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Bradwell Community Land Trust</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='scroll.css') }}">
+  <!--<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/css/splide.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/js/splide.min.js"></script> -->
+
+
+</head>
+<body>
+  <div class="page-wrapper">
+    <div class="page-content">
+ <!-- Navigation -->
+      <header>
+          <nav class="navbar">
+            <a href="{{ url_for('main.home') }}">
+                  <img class= "blct-logo" src="{{ url_for('static', filename='images/Bradwell-Community-Land-Trust-colour.png') }}" alt="BCLT Logo">
+            </a>      
+              <ul class="nav-links">
+              <li><a href="{{ url_for('main.about') }}">About Us</a></li>
+              <li><a href="{{ url_for('main.projects') }}">Projects</a></li>
+              <li><a href="{{ url_for('main.events') }}">Events</a></li>
+              <li><a href="{{ url_for('main.newsletters') }}">Newsletters</a></li>
+            </ul>
+            
+            <div class="hamburger">
+              <span></span><span></span><span></span>
+            </div>
+          </nav>
+        </header>

@@ -1,0 +1,388 @@
+
+{% include 'layouts/header.html' %}
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="hero-overlay"></div>
+    <div class="title-container">
+      <h1>We're working to maintain and improve the physical,<br />
+        social and economic infrastructure within the <br />Parish of Bradwell.<br /></h1>
+    </div>
+  </section>
+
+  <!-- Mission Section -->
+  <section class="section scroll-reveal">
+    <h2>Our Mission</h2>
+    <p>Bradwell Community Land Trust (BCLT) is a community-led organization dedicated to developing and managing affordable homes and other assets important to our community. We ensure these remain affordable for future generations.</p>
+    <p>Through community ownership and local decision-making, we're creating sustainable solutions to meet Bradwell's unique needs.</p>
+    <a href="{{ url_for('main.about') }}" class="btn-secondary">About Us</a>
+  </section>
+
+  <!-- Key Areas Section -->
+  <section class="key-areas">
+    <div class="container">
+      <h2 class="section-title">What We Do</h2>
+      <div class="areas-grid">
+        <div class="area-card scroll-reveal">
+          <div class="area-icon housing-icon"></div>
+          <h3>Affordable Housing</h3>
+          <p>Developing homes that local people can afford, ensuring our community remains diverse and vibrant.</p>
+        </div>
+        <div class="area-card scroll-reveal">
+          <div class="area-icon community-icon"></div>
+          <h3>Community Spaces</h3>
+          <p>Creating and preserving spaces for community gatherings, recreation, and local services.</p>
+        </div>
+        <div class="area-card scroll-reveal">
+          <div class="area-icon sustainability-icon"></div>
+          <h3>Sustainability</h3>
+          <p>Implementing environmentally responsible practices in all our developments and initiatives.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Current Projects Preview -->
+  <section class="project-preview scroll-reveal">
+    <div class="container">
+      <h2 class="section-title">Current Projects</h2>
+      <div class="featured-project">
+        <div class="project-image"></div>
+        <div class="project-info">
+          <h3>Featured: Bradwell Affordable Housing Initiative</h3>
+          <p>Our flagship project aims to develop 12 affordable homes for local families, built to high environmental standards and designed to complement our village character.</p>
+          <a href="{{ url_for('main.projects') }}" class="btn-secondary">View All Projects</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Community Impact -->
+  <section class="impact-section scroll-reveal">
+    <div class="container">
+      <h2 class="section-title">Our Impact</h2>
+      <div class="impact-stats">
+        <div class="stat-card">
+          <span class="stat-number">9+</span>
+          <p>Years Serving Bradwell</p>
+        </div>
+        <div class="stat-card">
+          <span class="stat-number">x+</span>
+          <p>Affordable Homes Created</p>
+        </div>
+        <div class="stat-card">
+          <span class="stat-number">x+</span>
+          <p>Community Members</p>
+        </div>
+        <div class="stat-card">
+          <span class="stat-number">x</span>
+          <p>Major Projects Completed</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Get Involved -->
+  <section class="get-involved scroll-reveal">
+    <div class="container">
+      <h2 class="section-title">Get Involved</h2>
+      <p class="section-intro">There are many ways to support our work and help shape the future of Bradwell.</p>
+      <div class="involvement-options">
+        <a href="#" class="involvement-card">
+          <h3>Become a Member</h3>
+          <p>Join the Trust and have your say in our decisions and projects.</p>
+        </a>
+        <a href="#" class="involvement-card">
+          <h3>Volunteer</h3>
+          <p>Share your skills and time to support our community initiatives.</p>
+        </a>
+        <a href="#" class="involvement-card">
+          <h3>Attend Events</h3>
+          <p>Come to our community meetings and social gatherings.</p>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Latest News/Updates -->
+  <section class="news-section scroll-reveal">
+    <div class="container">
+      <h2 class="section-title">Latest Updates</h2>
+      <div class="news-grid">
+        <div class="news-card">
+          <div class="news-date">some date</div>
+          <h3>Summer Community Meeting Scheduled</h3>
+          <p>Join us for our annual community meeting to discuss progress on current projects.</p>
+          <a href="{{ url_for('main.events') }}" class="news-link">Read More</a>
+        </div>
+        <div class="news-card">
+          <div class="news-date">some date</div>
+          <h3>New Housing Development Approved</h3>
+          <p>Planning permission granted for our newest affordable housing scheme on Oak Street.</p>
+          <a href="{{ url_for('main.projects') }}" class="news-link">Read More</a>
+        </div>
+        <div class="news-card">
+          <div class="news-date">Date</div>
+          <h3>Newletter</h3>
+          <p>somethings about newletters</p>
+          <a href="{{ url_for('main.newsletters') }}" class="news-link">Read More</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Testimonials -->
+  <section class="testimonials scroll-reveal">
+    <div class="container">
+      <h2 class="section-title">Community Voices</h2>
+      <div class="testimonial-slider">
+        <div class="testimonial-slide">
+          <p class="testimonial-quote">"The Land Trust's website is great and late"</p>
+          <div class="testimonial-author">- TJ Hornsey, Web dev</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Newsletter Sign-up -->
+  <section class="newsletter-signup scroll-reveal">
+    <div class="container">
+      <h2 class="section-title">Stay Updated</h2>
+      <p>Subscribe to our newsletter to receive updates on our projects and community events.</p>
+      <form class="signup-form">
+        <input type="email" placeholder="Your email address" required>
+        <button type="submit" class="btn-secondary">Subscribe</button>
+      </form>
+    </div>
+  </section>
+
+{% include 'layouts/footer.html' %}
+ 
+<script>
+    // Advanced Scroll Effects for Bradwell Community Land Trust Website
+document.addEventListener('DOMContentLoaded', function() {
+  // Initialize AOS (Animate On Scroll library simulation)
+  initScrollEffects();
+  
+  // Initialize counter animation for impact stats
+  initCounterAnimation();
+  
+  // Initialize parallax effects
+  initParallaxEffects();
+  
+  // Initialize smooth scrolling for navigation
+  initSmoothScrolling();
+  
+  // Initialize hamburger menu toggle
+  const ham = document.querySelector('.hamburger'),
+        nav = document.querySelector('.nav-links');
+  ham?.addEventListener('click', () => nav.classList.toggle('open'));
+
+  // Initialize header transform on scroll
+  initHeaderTransform();
+});
+
+// Custom scroll reveal implementation with advanced options
+function initScrollEffects() {
+  // Different animation types
+  const animations = [
+    'fade-up', 
+    'fade-right', 
+    'fade-left', 
+    'zoom-in', 
+    'slide-up'
+  ];
+  
+  // Select all elements with scroll-reveal class
+  const reveals = document.querySelectorAll('.scroll-reveal');
+  
+  // Create staggered effect for elements with .stagger-reveal
+  const staggeredContainers = document.querySelectorAll('.stagger-reveal');
+  staggeredContainers.forEach(container => {
+    const children = container.children;
+    Array.from(children).forEach((child, index) => {
+      child.classList.add('scroll-item');
+      child.style.transitionDelay = `${index * 0.1}s`;
+    });
+  });
+  
+  // Apply random animations to elements with .random-animation
+  const randomAnimElements = document.querySelectorAll('.random-animation');
+  randomAnimElements.forEach(el => {
+    const randomAnim = animations[Math.floor(Math.random() * animations.length)];
+    el.dataset.animation = randomAnim;
+  });
+  
+  // Set up the IntersectionObserver with more options
+  const observerOptions = { 
+    threshold: 0.15,
+    rootMargin: "0px 0px -50px 0px"
+  };
+  
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        // Get animation type from data attribute or default to 'fade-up'
+        const animation = entry.target.dataset.animation || 'fade-up';
+        entry.target.classList.add('revealed');
+        entry.target.classList.add(animation);
+        
+        // Unobserve after animation is triggered
+        observer.unobserve(entry.target);
+      }
+    });
+  }, observerOptions);
+  
+  // Observe all elements
+  reveals.forEach(el => observer.observe(el));
+  document.querySelectorAll('.scroll-item').forEach(el => observer.observe(el));
+}
+
+// Animate counters for impact stats
+function initCounterAnimation() {
+  const statNumbers = document.querySelectorAll('.stat-number');
+  
+  const counterObserver = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const target = entry.target;
+        const value = parseInt(target.textContent);
+        
+        if (!isNaN(value) && value > 0) {
+          let count = 0;
+          const duration = 2000; // 2 seconds
+          const interval = Math.floor(duration / value);
+          
+          // Only run counter if the content is a number
+          if (target.textContent.match(/^\d+\+?$/)) {
+            target.textContent = '0';
+            
+            const timer = setInterval(() => {
+              count++;
+              target.textContent = count + (target.textContent.includes('+') ? '+' : '');
+              
+              if (count >= value) {
+                clearInterval(timer);
+              }
+            }, interval);
+          }
+        }
+        
+        counterObserver.unobserve(target);
+      }
+    });
+  }, { threshold: 0.5 });
+  
+  statNumbers.forEach(stat => counterObserver.observe(stat));
+}
+
+// Create parallax scrolling effects
+function initParallaxEffects() {
+  const parallaxElements = document.querySelectorAll('.parallax');
+  
+  window.addEventListener('scroll', () => {
+    const scrollTop = window.pageYOffset;
+    
+    parallaxElements.forEach(element => {
+      const speed = element.dataset.speed || 0.5;
+      const offset = scrollTop * speed;
+      element.style.transform = `translateY(${offset}px)`;
+    });
+  });
+  
+  // Add parallax to hero image
+  const hero = document.querySelector('.hero');
+  if (hero) {
+    window.addEventListener('scroll', () => {
+      const scrollTop = window.pageYOffset;
+      if (scrollTop < hero.offsetHeight) {
+        const heroSpeed = 0.4;
+        hero.style.backgroundPositionY = `${scrollTop * heroSpeed}px`;
+      }
+    });
+  }
+}
+
+// Smooth scrolling for navigation links
+function initSmoothScrolling() {
+  const navLinks = document.querySelectorAll('a[href^="#"]');
+  
+  navLinks.forEach(link => {
+    link.addEventListener('click', function(e) {
+      const targetId = this.getAttribute('href');
+      
+      if (targetId && targetId !== '#') {
+        e.preventDefault();
+        
+        const targetElement = document.querySelector(targetId);
+        
+        if (targetElement) {
+          // Close mobile menu if open
+          const nav = document.querySelector('.nav-links');
+          if (nav && nav.classList.contains('open')) {
+            nav.classList.remove('open');
+          }
+          
+          window.scrollTo({
+            top: targetElement.offsetTop - 80, // Adjust for header height
+            behavior: 'smooth'
+          });
+        }
+      }
+    });
+  });
+}
+
+// Transform header on scroll
+function initHeaderTransform() {
+  const navbar = document.querySelector('.navbar');
+  const heroHeight = document.querySelector('.hero')?.offsetHeight || 500;
+  
+  if (navbar) {
+    window.addEventListener('scroll', () => {
+      const scrollTop = window.pageYOffset;
+      
+      if (scrollTop > 100) {
+        navbar.classList.add('navbar-scrolled');
+      } else {
+        navbar.classList.remove('navbar-scrolled');
+      }
+      
+      // Change navbar color based on section
+      if (scrollTop > heroHeight) {
+        navbar.classList.add('navbar-solid');
+      } else {
+        navbar.classList.remove('navbar-solid');
+      }
+    });
+  }
+}
+
+// Add tilt effect to cards
+function initTiltEffect() {
+  const tiltElements = document.querySelectorAll('.tilt-effect');
+  
+  tiltElements.forEach(element => {
+    element.addEventListener('mousemove', (e) => {
+      const rect = element.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      
+      const centerX = rect.width / 2;
+      const centerY = rect.height / 2;
+      
+      const deltaX = (x - centerX) / centerX;
+      const deltaY = (y - centerY) / centerY;
+      
+      const tiltX = deltaY * 10; // Max 10 degrees rotation
+      const tiltY = -deltaX * 10;
+      
+      element.style.transform = `perspective(1000px) rotateX(${tiltX}deg) rotateY(${tiltY}deg) scale3d(1.05, 1.05, 1.05)`;
+    });
+    
+    element.addEventListener('mouseleave', () => {
+      element.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) scale3d(1, 1, 1)';
+    });
+  });
+}
+</script>
+</html>

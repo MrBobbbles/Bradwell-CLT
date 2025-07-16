@@ -1,0 +1,46 @@
+{% include 'layouts/header.html' %}
+<script src="https://cdn.tailwindcss.com"></script>
+<section class="hero-board">
+    <div class="hero-overlay"></div>
+    <div class="title-container">
+        <h1>Our Directors</h1>
+    </div>
+</section>
+
+<main class="container mx-auto px-4 py-8">
+    {% if people %}
+        <!-- Grid Layout for People Cards -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+            {% for person in people %}
+                <div class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300">
+                    <!-- Image -->
+                    <div class="w-full h-120 bg-gray-200 flex items-center justify-center">
+                        {% if person.image_url %}
+                            <img src="{{  url_for('static', filename=person.image_url) }}" alt="{{ person.name }}'s photo" class="w-full h-full object-cover">
+                        {% else %}
+                            <span class="text-gray-500 text-sm">No Image Available</span>
+                        {% endif %}
+                    </div>
+                    <!-- Details -->
+                    <div class="p-4">
+                        <h2 class="text-xl font-semibold text-gray-800">{{ person.name }}, {{ person.role }}</h2>
+                        {% if person.infos %}
+                            <ul class="text-gray-600 mt-1 list-disc list-inside">
+                                {% for info in person.infos %}
+                                    <li>{{ info.text }}</li>
+                                {% endfor %}
+                            </ul>
+                        {% endif %}
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <!-- No People Message -->
+        <div class="text-center py-12">
+            <p class="text-gray-600 text-lg">No people found.</p>
+        </div>
+    {% endif %}
+</main>
+
+{% include 'layouts/footer.html' %}

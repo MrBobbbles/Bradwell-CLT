@@ -1,0 +1,30 @@
+{% include 'layouts/admin_header.html' %}
+<h1>Admin View</h1>
+
+<h2>Add an Event</h2>
+
+<form action="{{ url_for('admin.add_event') }}" method="POST" enctype="multipart/form-data" style="max-width: 500px; margin: 0 auto;">
+  <div style="margin-bottom: 1rem;">
+    <label for="name">Name:</label><br>
+    <input type="text" name="name" id="name" required class="form-control" style="width: 100%; padding: 0.5rem;" />
+  </div>
+
+  <div style="margin-bottom: 1rem;">
+    <label for="description">Description:</label><br>
+    <input type="text" name="description" id="description" required class="form-control" style="width: 100%; padding: 0.5rem;" />
+  </div>
+
+  <div style="margin-bottom: 1rem;">
+    <label for="employment">Date:</label><br>
+    <input type="date" name="date" id="date" class="form-control" style="width: 100%; padding: 0.5rem;" />
+  </div>
+
+  <div style="margin-bottom: 1rem;">
+    <label for="location">Location:</label><br>
+    <input type="text" name="location" id="location" required class="form-control" style="width: 100%; padding: 0.5rem;" />
+  </div>
+
+  <button type="submit" class="btn">Add Event</button>
+</form>
+
+{% include 'layouts/admin_footer.html' %}

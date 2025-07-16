@@ -1,0 +1,47 @@
+{% include 'layouts/admin_header.html' %}
+<h1>Admin View</h1>
+<script src="https://cdn.tailwindcss.com"></script>
+<section class="hero-board">
+    <div class="hero-overlay"></div>
+    <div class="title-container">
+        <h1>Our Directors</h1>
+    </div>
+</section>
+
+<main class="container mx-auto px-4 py-8">
+    {% if people %}
+        <!-- Grid Layout for People Cards -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+            {% for person in people %}
+                <div class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300">
+                    <!-- Image -->
+                    <div class="w-full max-h-120 bg-gray-200">
+                        {% if person.image_url %}
+                            <img src="{{ url_for('static', filename=person.image_url) }}" alt="{{ person.name }}'s photo" class="w-full object-cover">
+                        {% else %}
+                            <div class="h-48 flex items-center justify-center text-gray-500 text-sm">
+                                No Image Available
+                            </div>
+                        {% endif %}
+                    </div>
+                    <!-- Details -->
+                    <div class="p-4">
+                        <h2 class="text-xl font-semibold text-gray-800">{{ person.name }}, {{person.role}}</h2>
+                        <a href="{{url_for('admin.edit_person', person_id = person.id)}}" class="btn">Edit</a>
+                        <a href="{{url_for('admin.delete_person', person_id = person.id)}}" class="btn red" onclick="return confirm('Are you sure you want to delete {{ person.name }}?');">Delete</a>
+
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <!-- No People Message -->
+        <div class="text-center py-12">
+            <p class="text-gray-600 text-lg">No people added yet.</p>
+        </div>
+    {% endif %}
+    <div class="btn-container btn-add">
+      <a href="{{url_for('admin.add_person') }}" class="btn btn-add">Add a person</a>
+    </div>
+</main>
+{% include 'layouts/admin_footer.html' %}
