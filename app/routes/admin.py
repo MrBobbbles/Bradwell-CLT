@@ -6,7 +6,6 @@ from app.models.person import Person
 from app.models.project import Project
 from app.models.newsletter import Newsletter
 from app.models.event import Event
-from app.models.paragraph import Paragraph
 from app.models.info import Info
 
 import uuid
@@ -262,45 +261,14 @@ def add_project():
     if request.method == 'POST':
         title = request.form.get('title')
         about = request.form.get('about')
-        paragraphs_data = request.files.getlist('paragraphs[0][image]')  # fallback only
-
+        finished = 'finished' in request.form        
+        content = request.form.get('content')
         # Create and add the Project
-        project = Project(title=title, about=about)
+        project = Project(title=title, about=about, finished=finished, content=content)
         db.session.add(project)
-        db.session.commit() 
-
-        paragraphs = []
-        index = 0
-        while True:
-            text = request.form.get(f'paragraphs[{index}][text]')
-            image = request.files.get(f'paragraphs[{index}][image]')
-
-            if not text and not image:
-                break  # no more paragraphs
-
-            image_url = None
-            if image and image.filename != '':
-                filename = secure_filename(image.filename)
-                upload_folder = os.path.join(current_app.root_path, 'static/images/uploads')
-
-                image_path = os.path.join(upload_folder, filename)
-                image.save(image_path)
-                image_url = f'images/uploads/{image.filename}'
-
-            paragraph = Paragraph(
-                text=text,
-                image_url=image_url,
-                project_id=project.id,
-                order=index
-            )
-            paragraphs.append(paragraph)
-            index += 1
-
-        db.session.add_all(paragraphs)
         db.session.commit()
 
         return redirect(url_for('admin.projects'))
-
     return render_template('admin/add_project.html')
 
 @admin.route('/delete_person/<int:person_id>')

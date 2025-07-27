@@ -7,8 +7,8 @@ class Project(db.Model):
     title = db.Column(db.String(100), nullable=False)
     about = db.Column(db.String(400), nullable=True)
     content = db.Column(db.Text)
+    finished = db.Column(db.Boolean, nullable = False)
     
     def __repr__(self):
         return f'<Project {self.title}>'
     
-    paragraphs = db.relationship('Paragraph', backref='project', lazy=True, cascade='all, delete-orphan')
