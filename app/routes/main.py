@@ -4,7 +4,6 @@ from app.models.user import User
 from app import db
 from app.models.person import Person
 from app.models.newsletter import Newsletter
-from app.models.paragraph import Paragraph
 from app.models.project import Project
 
 
@@ -27,14 +26,15 @@ def events():
     pro = User.query.all()
     return render_template('events.html', users=pro)
 
+
 @main.route('/projects')
 def projects():
     projects = Project.query.all()
 
     project_data = []
     for project in projects:
-        soup = BeautifulSoup(project.about or "", 'html.parser')
-        # Extract all <img src="..."> values
+        soup = BeautifulSoup(project.content or "", 'html.parser')
+        # Extract all <img src="..."> values from TinyMCE content
         images = [
             img['src'].lstrip('/') for img in soup.find_all('img') if img.has_attr('src')
         ]

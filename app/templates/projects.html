@@ -30,9 +30,9 @@
                         <div class="splide__track">
                             <ul class="splide__list">
                             {% for img in images %}
-                                <li class="splide__slide">
+                              <li class="splide__slide">
                                 <img src="{{ url_for('static', filename=img) }}" alt="{{ project.title }} image" class="w-full h-48 object-cover">
-                                </li>
+                              </li>
                             {% endfor %}
                             </ul>
                         </div>
