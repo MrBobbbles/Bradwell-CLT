@@ -202,13 +202,13 @@ def add_person():
         role = request.form.get('role')
         image_file = request.files.get('image')
 
-        filename = None
+        filepath = None
         if image_file and image_file.filename:
             filename = secure_filename(image_file.filename)
             filepath = os.path.join(current_app.root_path, 'static/images/uploads', filename)
             image_file.save(filepath)
 
-        person = Person(name=name, role=role, image_url=f'images/uploads/{filename}' if filename else None)
+        person = Person(name=name, role=role, image_url=filepath if filename else None)
         db.session.add(person)
         db.session.flush()
 
@@ -263,8 +263,16 @@ def add_project():
         about = request.form.get('about')
         finished = 'finished' in request.form        
         content = request.form.get('content')
+        image_file = request.files.get('image')
+
+        filepath = None
+        if image_file and image_file.filename:
+            filename = secure_filename(image_file.filename)
+            filepath = os.path.join(current_app.root_path, 'static/images/uploads', filename)
+            image_file.save(filepath)
+
         # Create and add the Project
-        project = Project(title=title, about=about, finished=finished, content=content)
+        project = Project(title=title, about=about, finished=finished, content=content, image_url=filepath)
         db.session.add(project)
         db.session.commit()
 
