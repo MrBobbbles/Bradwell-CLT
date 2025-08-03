@@ -258,6 +258,7 @@ def edit_person(person_id):
 
 @admin.route('/admin/add_project', methods=['GET', 'POST'])
 def add_project():
+    
     if request.method == 'POST':
         title = request.form.get('title')
         about = request.form.get('about')

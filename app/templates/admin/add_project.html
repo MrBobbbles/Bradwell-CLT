@@ -6,9 +6,15 @@
 <form action="{{ url_for('admin.add_project') }}" method="POST">
   <label>Title:</label>
   <input type="text" name="title" class="form-control" required>
+  
   <div style="margin-bottom: 1rem;">
     <label for="about">About:</label><br>
     <textarea name="about" id="about" class="form-control about-form" rows="3" style="width: 100%; padding: 0.5rem;"></textarea>
+  </div>
+
+  <div style="margin-bottom: 1rem;">
+    <label for="image">Cover Image:</label><br>
+    <input type="file" name="image" id="image" class="form-control" />
   </div>
 
   <div style="margin-bottom: 1rem;">
