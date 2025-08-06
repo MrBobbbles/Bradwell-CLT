@@ -1366,6 +1366,53 @@ iframe{
   display: block;
 }
 
+/* erros */
+.flash-messages {
+  position: fixed;
+  top: 1rem;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 9999;
+  width: auto;
+  max-width: 90%;
+  text-align: center;
+}
+
+.alert {
+  display: inline-block;
+  padding: 1rem 1.5rem;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  font-weight: 500;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border: 1px solid transparent;
+  animation: slideDownFade 0.3s ease;
+}
+
+.alert-success {
+  background-color: #e6f9f0;
+  color: #20794d;
+  border-color: #b9f0d5;
+}
+
+.alert-error {
+  background-color: #ffecec;
+  color: #c0392b;
+  border-color: #f5c6cb;
+}
+
+/* Optional fade/slide animation */
+@keyframes slideDownFade {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -20%);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, 0%);
+  }
+}
+
 /* Responsive Design */
 @media (max-width: 768px) {
   .project-about {

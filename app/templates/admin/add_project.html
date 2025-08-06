@@ -3,7 +3,7 @@
 
 <h2>Add a Project</h2>
 
-<form action="{{ url_for('admin.add_project') }}" method="POST">
+<form action="{{ url_for('admin.add_project') }}" method="POST" enctype="multipart/form-data">
   <label>Title:</label>
   <input type="text" name="title" class="form-control" required>
   
@@ -13,8 +13,8 @@
   </div>
 
   <div style="margin-bottom: 1rem;">
-    <label for="image">Cover Image:</label><br>
-    <input type="file" name="image" id="image" class="form-control" />
+    <label for="cover">Cover Image:</label><br>
+    <input type="file" name="cover" id="cover" class="form-control" />
   </div>
 
   <div style="margin-bottom: 1rem;">
@@ -40,6 +40,8 @@ document.addEventListener('DOMContentLoaded', function () {
     automatic_uploads: true,
     images_upload_url: '/admin/upload_image',
     file_picker_types: 'image',
+    branding: false, 
+    promotion: false,
     license_key: 'gpl',
     images_upload_handler: (blobInfo, progress) => new Promise((resolve, reject) => {
       const xhr = new XMLHttpRequest();

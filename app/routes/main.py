@@ -1,10 +1,13 @@
-from flask import Blueprint, jsonify, request, render_template
+from flask import Blueprint, jsonify, flash, redirect, url_for, request, render_template
 from bs4 import BeautifulSoup
+import re
 from app.models.user import User
 from app import db
 from app.models.person import Person
 from app.models.newsletter import Newsletter
 from app.models.project import Project
+from app.models.event import Event
+from app.models.email import Email
 
 
 main = Blueprint('main', __name__)
@@ -12,19 +15,18 @@ main = Blueprint('main', __name__)
 
 @main.route('/')
 def home():
-    # Query users from the database
-    return render_template('index.html')
+    projects = Project.query.all()
+    return render_template('index.html', projects=projects)
 
 @main.route('/about')
 def about():
-    # Query users from the database
-    users = User.query.all()
-    return render_template('about.html', users=users)
+
+    return render_template('about.html',)
 
 @main.route('/events')
 def events():
-    pro = User.query.all()
-    return render_template('events.html', users=pro)
+    events = Event.query.all()
+    return render_template('events.html', events=events)
 
 
 @main.route('/projects')
@@ -34,7 +36,6 @@ def projects():
     project_data = []
     for project in projects:
         soup = BeautifulSoup(project.content or "", 'html.parser')
-        # Extract all <img src="..."> values from TinyMCE content
         images = [
             img['src'].lstrip('/') for img in soup.find_all('img') if img.has_attr('src')
         ]
@@ -74,21 +75,23 @@ def view_project(project_id):
     project = Project.query.get_or_404(project_id)
     return render_template('project_view.html', project=project)
 
+@main.route('/signup')
+def signup():
+    return render_template('member_form.html')  
 
+@main.route('/email_form', methods=['POST'])
+def email_form():
+    e_add = request.form.get('email')
 
-@main.route('/add_test_person')
-def add_test_person():
-    try:
-        # Create a test person
-        test_person = Person(name="Test User", employment="Works at home", image_url="static/images/bradwell.jpg")
-        db.session.add(test_person)
-        db.session.commit()
-        return jsonify({
-            "success": True,
-            "message": "Test person added successfully!",
-            "person": {"id": test_person.id, "name": test_person.name, "employment": test_person.employment}
-        })
-    except Exception as e:
-        db.session.rollback()
-        return jsonify({"success": False, "error": str(e)})
-    
+    # Basic regex email validation
+    if not e_add or not re.match(r"[^@]+@[^@]+\.[^@]+", e_add):
+        flash("Please enter a valid email address.", "error")
+        return redirect(request.referrer or url_for('main.index'))
+
+    # Save email
+    email = Email(email=e_add)
+    db.session.add(email)
+    db.session.commit()
+
+    flash("Thanks for subscribing!", "success")
+    return redirect(request.referrer or url_for('main.index'))

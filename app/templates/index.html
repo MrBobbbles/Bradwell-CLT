@@ -1,4 +1,3 @@
-
 {% include 'layouts/header.html' %}
   <!-- Hero Section -->
   <section class="hero">
@@ -42,20 +41,42 @@
   </section>
 
   <!-- Current Projects Preview -->
-  <section class="project-preview scroll-reveal">
-    <div class="container">
-      <h2 class="section-title">Current Projects</h2>
-      <div class="featured-project">
-        <div class="project-image"></div>
+  {% if projects %}
+    <section class="project-preview scroll-reveal">
+      <div class="container">
+        <h2 class="section-title">Current Projects</h2>
+        {% if projects|length > 1 %}
+          <div class="splide" id="project-carousel">
+            <div class="splide__track">
+              <ul class="splide__list">
+                {% for project in projects %}
+                <li class="splide__slide">
+                  <a href="{{ url_for('main.view_project', project_id=project.id) }}">
+                    <img src="{{ project.image_url }}" alt="{{ project.title }}" class="project-image" />
+                    <p>{{project.about}}</p>
+
+                  </a>
+                </li>
+                {% endfor %}
+              </ul>
+            </div>
+          </div>
+        {% else %}
+          {% for project in projects %}
+            <a href="{{ url_for('main.view_project', project_id=project.id) }}">
+              <img src="{{ project.image_url }}" alt="{{ project.title }}" class="project-image" />
+            </a>
+            <p>{{project.about}}</p>
+          {% endfor %}
+        {% endif %}
+
         <div class="project-info">
-          <h3>Featured: Bradwell Affordable Housing Initiative</h3>
-          <p>Our flagship project aims to develop 12 affordable homes for local families, built to high environmental standards and designed to complement our village character.</p>
+          <h3>We have a goal to deliver affordable housing to the community</h3>
           <a href="{{ url_for('main.projects') }}" class="btn-secondary">View All Projects</a>
         </div>
       </div>
-    </div>
-  </section>
-
+    </section>
+  {% endif %}
   <!-- Community Impact -->
   <section class="impact-section scroll-reveal">
     <div class="container">
@@ -87,15 +108,15 @@
       <h2 class="section-title">Get Involved</h2>
       <p class="section-intro">There are many ways to support our work and help shape the future of Bradwell.</p>
       <div class="involvement-options">
-        <a href="#" class="involvement-card">
+        <a href="{{ url_for('main.signup') }}" class="involvement-card">
           <h3>Become a Member</h3>
           <p>Join the Trust and have your say in our decisions and projects.</p>
         </a>
         <a href="#" class="involvement-card">
-          <h3>Volunteer</h3>
-          <p>Share your skills and time to support our community initiatives.</p>
+          <h3>Donate</h3>
+          <p>Give back to the community and support the future.</p>
         </a>
-        <a href="#" class="involvement-card">
+        <a href="{{ url_for('main.events') }}" class="involvement-card">
           <h3>Attend Events</h3>
           <p>Come to our community meetings and social gatherings.</p>
         </a>
@@ -109,22 +130,21 @@
       <h2 class="section-title">Latest Updates</h2>
       <div class="news-grid">
         <div class="news-card">
-          <div class="news-date">some date</div>
-          <h3>Summer Community Meeting Scheduled</h3>
-          <p>Join us for our annual community meeting to discuss progress on current projects.</p>
-          <a href="{{ url_for('main.events') }}" class="news-link">Read More</a>
+          <a href="{{ url_for('main.events') }}" class="news-link"></a>
+            <div class="news-date">Next Event</div>
+            <h3>Come join us on our next event</h3>
+            <p>Join us for our annual community meeting to discuss progress on current projects.</p>
+          </a>
         </div>
         <div class="news-card">
-          <div class="news-date">some date</div>
-          <h3>New Housing Development Approved</h3>
-          <p>Planning permission granted for our newest affordable housing scheme on Oak Street.</p>
-          <a href="{{ url_for('main.projects') }}" class="news-link">Read More</a>
+          <h3>Projects</h3>
+          <p>See what projects we are working on!</p>
+          <a href="{{ url_for('main.projects') }}" class="news-link">Click here</a>
         </div>
         <div class="news-card">
-          <div class="news-date">Date</div>
-          <h3>Newletter</h3>
-          <p>somethings about newletters</p>
-          <a href="{{ url_for('main.newsletters') }}" class="news-link">Read More</a>
+          <h3>Newletters</h3>
+          <p>Get the latest updates</p>
+          <a href="{{ url_for('main.newsletters') }}" class="news-link">Click here</a>
         </div>
       </div>
     </div>
@@ -148,8 +168,8 @@
     <div class="container">
       <h2 class="section-title">Stay Updated</h2>
       <p>Subscribe to our newsletter to receive updates on our projects and community events.</p>
-      <form class="signup-form">
-        <input type="email" placeholder="Your email address" required>
+      <form class="signup-form" action="{{ url_for('main.email_form') }}" method="POST">
+        <input type="email" name="email" placeholder="Your email address" required>
         <button type="submit" class="btn-secondary">Subscribe</button>
       </form>
     </div>
@@ -171,6 +191,8 @@ document.addEventListener('DOMContentLoaded', function() {
   
   // Initialize smooth scrolling for navigation
   initSmoothScrolling();
+
+  initProjectSplide();
   
   // Initialize hamburger menu toggle
   const ham = document.querySelector('.hamburger'),
@@ -273,6 +295,24 @@ function initCounterAnimation() {
   }, { threshold: 0.5 });
   
   statNumbers.forEach(stat => counterObserver.observe(stat));
+}
+
+// Project Splide
+function initProjectSplide(){
+  new Splide('#project-carousel', {
+    type   : 'loop',
+    perPage: 1,
+    gap    : '1rem',
+    autoplay: true,
+    breakpoints: {
+      768: {
+        perPage: 1,
+      },
+      1024: {
+        perPage: 1,
+      },
+    }
+  }).mount();
 }
 
 // Create parallax scrolling effects

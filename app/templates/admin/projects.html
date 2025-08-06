@@ -17,7 +17,7 @@
                     <!-- Project Hero Image -->
                     <div class="w-full h-48 bg-gray-200 flex items-center justify-center">
                         {% if project.image_url %}
-                            <img src="{{  url_for('static', filename=project.image_url) }}" alt="{{ project.title }} image" class="w-full h-full object-cover">
+                            <img src="{{ project.image_url }}" alt="{{ project.title }} image" class="w-full h-full object-cover">
                         {% else %}
                             <span class="text-gray-500 text-sm">No Image Available</span>
                         {% endif %}

@@ -7,6 +7,7 @@ from app.models.project import Project
 from app.models.newsletter import Newsletter
 from app.models.event import Event
 from app.models.info import Info
+from app.models.email import Email
 
 import uuid
 from werkzeug.utils import secure_filename
@@ -27,11 +28,6 @@ def projects():
     projects = Project.query.all()
     return render_template('admin/projects.html', projects=projects)
 
-
-@admin.route('/edit_project')
-@login_required
-def edit_project():
-    return render_template('admin/projects.html')
 
 @admin.route('/delete_project/<int:project_id>')
 @login_required
@@ -208,7 +204,7 @@ def add_person():
             filepath = os.path.join(current_app.root_path, 'static/images/uploads', filename)
             image_file.save(filepath)
 
-        person = Person(name=name, role=role, image_url=filepath if filename else None)
+        person = Person(name=name, role=role, image_url = f"/static/images/uploads/{filename}")
         db.session.add(person)
         db.session.flush()
 
@@ -258,27 +254,52 @@ def edit_person(person_id):
 
 @admin.route('/admin/add_project', methods=['GET', 'POST'])
 def add_project():
-    
     if request.method == 'POST':
         title = request.form.get('title')
         about = request.form.get('about')
-        finished = 'finished' in request.form        
+        finished = 'finished' in request.form    
         content = request.form.get('content')
-        image_file = request.files.get('image')
+        image_file = request.files.get('cover')
 
+        print("Files in request:", request.files)
+        print("Form data:", request.form)
         filepath = None
         if image_file and image_file.filename:
             filename = secure_filename(image_file.filename)
             filepath = os.path.join(current_app.root_path, 'static/images/uploads', filename)
             image_file.save(filepath)
+        print(filepath)
 
         # Create and add the Project
-        project = Project(title=title, about=about, finished=finished, content=content, image_url=filepath)
+        project = Project(title=title, about=about, finished=finished or False, content=content, image_url = f"/static/images/uploads/{filename}")
         db.session.add(project)
         db.session.commit()
 
         return redirect(url_for('admin.projects'))
     return render_template('admin/add_project.html')
+
+@admin.route('/edit_project/<int:project_id>', methods=['GET', 'POST'])
+@login_required
+def edit_project(project_id):
+    project = Project.query.get_or_404(project_id)
+
+    if request.method == 'POST':
+        project.title = request.form.get('title')
+        project.about = request.form.get('about')
+        project.finished = 'finished' in request.form
+        project.content = request.form.get('content')
+
+        image_file = request.files.get('cover')
+        if image_file and image_file.filename:
+            filename = secure_filename(image_file.filename)
+            filepath = os.path.join(current_app.root_path, 'static/images/uploads', filename)
+            image_file.save(filepath)
+            project.image_url = f"/static/images/uploads/{filename}"
+
+        db.session.commit()
+        return redirect(url_for('admin.projects'))
+
+    return render_template('admin/edit_project.html', project=project)
 
 @admin.route('/delete_person/<int:person_id>')
 @login_required
@@ -311,3 +332,9 @@ def upload_image():
     file_url = url_for('static', filename=f'images/uploads/{filename}')
     return jsonify({'location': file_url})
 
+
+@admin.route('/emails')
+@login_required
+def emails():
+    emails = Email.query.all()
+    return render_template('admin/emails.html', emails = emails)

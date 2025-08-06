@@ -6,12 +6,13 @@
   <title>Bradwell Community Land Trust</title>
   <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
   <link rel="stylesheet" href="{{ url_for('static', filename='scroll.css') }}">
-  <!--<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/css/splide.min.css">
-  <script src="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/js/splide.min.js"></script> -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/css/splide.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/js/splide.min.js"></script>
 
 
 </head>
 <body>
+  
   <div class="page-wrapper">
     <div class="page-content">
  <!-- Navigation -->
@@ -31,4 +32,23 @@
               <span></span><span></span><span></span>
             </div>
           </nav>
+          {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+              <div class="flash-messages">
+                {% for category, message in messages %}
+                  <div class="alert alert-{{ category }}">{{ message }}</div>
+                {% endfor %}
+              </div>
+            {% endif %}
+          {% endwith %}
+          <script>
+            document.addEventListener('DOMContentLoaded', function () {
+              setTimeout(() => {
+                document.querySelectorAll('.alert').forEach(alert => {
+                  alert.style.opacity = '0';
+                  setTimeout(() => alert.remove(), 300);  // remove from DOM
+                });
+              }, 4000); // hide after 4 seconds
+            });
+          </script>
         </header>
