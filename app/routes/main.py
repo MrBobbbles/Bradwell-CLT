@@ -1,4 +1,5 @@
 from flask import Blueprint, jsonify, flash, redirect, url_for, request, render_template
+import stripe
 from bs4 import BeautifulSoup
 import re
 from app.models.user import User
@@ -9,6 +10,7 @@ from app.models.project import Project
 from app.models.event import Event
 from app.models.email import Email
 
+#strip api key here
 
 main = Blueprint('main', __name__)
 
@@ -95,3 +97,39 @@ def email_form():
 
     flash("Thanks for subscribing!", "success")
     return redirect(request.referrer or url_for('main.index'))
+
+@main.route('/donations')
+def donations():
+    return render_template('donations.html')
+
+
+@main.route('/create-checkout-session', methods=["POST"])
+def create_checkout_session():
+    try:
+        data = request.get_json()
+        amount = data.get("amount")
+        if not amount or amount < 100:  # 100 pence = £1 minimum
+            return jsonify(error="Invalid donation amount."), 400
+
+        session = stripe.checkout.Session.create(
+            payment_method_types=["card"],
+            line_items=[{
+                "price_data": {
+                    "currency": "gbp",
+                    "product_data": {
+                        "name": "Donation",
+                    },
+                    "unit_amount": amount,
+                },
+                "quantity": 1,
+            }],
+            mode="payment",
+            success_url="http://localhost:5000/",
+            cancel_url="http://localhost:5000/donations",
+        )
+        return jsonify({"url": session.url})
+
+    except Exception as e:
+        import traceback
+        traceback.print_exc()
+        return jsonify(error=str(e)), 400
