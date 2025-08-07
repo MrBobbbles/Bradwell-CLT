@@ -44,35 +44,38 @@
   {% if projects %}
     <section class="project-preview scroll-reveal">
       <div class="container">
-        <h2 class="section-title">Current Projects</h2>
-        {% if projects|length > 1 %}
-          <div class="splide" id="project-carousel">
-            <div class="splide__track">
-              <ul class="splide__list">
-                {% for project in projects %}
-                <li class="splide__slide">
-                  <a href="{{ url_for('main.view_project', project_id=project.id) }}">
-                    <img src="{{ project.image_url }}" alt="{{ project.title }}" class="project-image" />
-                    <p>{{project.about}}</p>
-
-                  </a>
-                </li>
-                {% endfor %}
-              </ul>
+        <div class="card reddish-card">
+          <h2 class="section-title">Current Projects</h2>
+          {% if projects|length > 1 %}
+            <div class="splide" id="project-carousel">
+              <div class="splide__track">
+                <ul class="splide__list">
+                  {% for project in projects %}
+                    <li class="splide__slide">
+                      <a href="{{ url_for('main.view_project', project_id=project.id) }}" class="project-card">
+                        <h2 class="project-title">{{ project.title}}</h2>
+                        <img src="{{ project.image_url }}" alt="{{ project.title }}" class="project-image" />
+                        <p class="project-about">{{ project.about }}</p>
+                      </a>
+                    </li>
+                  {% endfor %}
+                </ul>
+              </div>
             </div>
-          </div>
-        {% else %}
-          {% for project in projects %}
-            <a href="{{ url_for('main.view_project', project_id=project.id) }}">
-              <img src="{{ project.image_url }}" alt="{{ project.title }}" class="project-image" />
-            </a>
-            <p>{{project.about}}</p>
-          {% endfor %}
-        {% endif %}
+          {% else %}
+            {% for project in projects %}
+              <a href="{{ url_for('main.view_project', project_id=project.id) }}" class="project-card">
+                <img src="{{ project.image_url }}" alt="{{ project.title }}" class="project-image" />
+                <p class="project-about">{{ project.about }}</p>
+              </a>
+              <p>{{project.about}}</p>
+            {% endfor %}
+          {% endif %}
 
-        <div class="project-info">
-          <h3>We have a goal to deliver affordable housing to the community</h3>
-          <a href="{{ url_for('main.projects') }}" class="btn-secondary">View All Projects</a>
+          <div class="project-info">
+            <h3>We have a goal to deliver affordable housing to the community</h3>
+            <a href="{{ url_for('main.projects') }}" class="btn-secondary">View All Projects</a>
+          </div>
         </div>
       </div>
     </section>
