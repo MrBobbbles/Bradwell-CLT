@@ -27,6 +27,15 @@
     <input type="checkbox" name="finished" id="finished" class="form-control about-form" {% if project.finished %}checked{% endif %}>
   </div>
 
+  <p>
+    To move an image to the left or right of a paragraph, put the image at the top of the desired paragraph and add this in the source:
+  </p>
+
+  <pre>
+  &lt;img style="float: left;" src=... &gt; 
+  &lt;img style="float: right;" src=... &gt;
+  </pre>
+
   <label>Project Content:</label>
   <textarea name="content" class="tinymce">{{ project.content }}</textarea>
 

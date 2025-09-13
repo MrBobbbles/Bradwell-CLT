@@ -1,5 +1,7 @@
 from flask import Blueprint, jsonify, flash, redirect, url_for, request, render_template
 import stripe
+from dotenv import load_dotenv
+import os
 from bs4 import BeautifulSoup
 import re
 from app.models.user import User
@@ -10,7 +12,8 @@ from app.models.project import Project
 from app.models.event import Event
 from app.models.email import Email
 
-#strip api key here
+load_dotenv()
+stripe.api_key = os.getenv("STRIPE_KEY")
 
 main = Blueprint('main', __name__)
 
