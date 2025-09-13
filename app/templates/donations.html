@@ -1,46 +1,266 @@
 {% include 'layouts/header.html' %}
-
-<div style="margin-top: 100px; max-width: 300px;">
-  <label for="donation-amount">Enter donation amount (£):</label><br>
-  <input
-    id="donation-amount"
-    type="number"
-    min="1"
-    step="0.01"
-    value="1"
-    style="width: 100%; padding: 8px; font-size: 16px;"
-  />
-  <button id="checkout-button" style="margin-top: 20px; width: 100%;">Donate</button>
-</div>
-
-<script>
-  document.getElementById("checkout-button").addEventListener("click", () => {
-    const amountInput = document.getElementById("donation-amount");
-    let amount = parseFloat(amountInput.value);
-
-    if (isNaN(amount) || amount < 1) {
-      alert("Please enter a valid donation amount of at least £1.");
-      return;
-    }
-
-    // Convert pounds to pence (smallest currency unit)
-    const amountInPence = Math.round(amount * 100);
-
-    fetch("/create-checkout-session", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ amount: amountInPence }),
-    })
-      .then(res => res.json())
-      .then(data => {
-        if (data.url) {
-          window.location.href = data.url;
-        } else {
-          alert("Error: " + (data.error || "Failed to create checkout session."));
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
-      })
-      .catch(() => alert("Network error, please try again."));
-  });
-</script>
 
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            
+        }
+
+        .donation-container {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 40px;
+            margin-top: 100px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            max-width: 400px;
+            width: 100%;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .donation-header {
+            margin-bottom: 30px;
+        }
+
+        .donation-title {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 10px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .donation-subtitle {
+            color: #666;
+            font-size: 1rem;
+            margin-bottom: 20px;
+        }
+
+        .amount-section {
+            margin-bottom: 30px;
+        }
+
+        .amount-label {
+            display: block;
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 15px;
+            text-align: left;
+        }
+
+        .amount-input-container {
+            position: relative;
+            margin-bottom: 20px;
+        }
+
+        .currency-symbol {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #667eea;
+            pointer-events: none;
+        }
+
+        #donation-amount {
+            width: 100%;
+            padding: 15px 15px 15px 40px;
+            font-size: 1.2rem;
+            border: 2px solid #e0e0e0;
+            border-radius: 12px;
+            outline: none;
+            transition: all 0.3s ease;
+            background: #fff;
+        }
+
+        #donation-amount:focus {
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .quick-amounts {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .quick-amount-btn {
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            background: #fff;
+            color: #333;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+        }
+
+        .quick-amount-btn:hover {
+            border-color: #667eea;
+            background: #667eea;
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        #checkout-button {
+            width: 100%;
+            padding: 16px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: white;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        #checkout-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+        }
+
+        #checkout-button:active {
+            transform: translateY(0);
+        }
+
+        .security-note {
+            margin-top: 20px;
+            font-size: 0.85rem;
+            color: #888;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .lock-icon {
+            width: 16px;
+            height: 16px;
+            fill: #888;
+        }
+
+        @media (max-width: 480px) {
+            .donation-container {
+                padding: 30px 20px;
+            }
+            
+            .donation-title {
+                font-size: 1.7rem;
+            }
+            
+            .quick-amounts {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+    </style>
+
+    <div class="donation-container">
+        <div class="donation-header">
+            <h1 class="donation-title">Make a Donation</h1>
+            <p class="donation-subtitle">Your support makes a difference</p>
+        </div>
+
+        <div class="amount-section">
+            <label for="donation-amount" class="amount-label">Choose your amount</label>
+            
+            <div class="quick-amounts">
+                <button class="quick-amount-btn" onclick="setAmount(5)">£5</button>
+                <button class="quick-amount-btn" onclick="setAmount(10)">£10</button>
+                <button class="quick-amount-btn" onclick="setAmount(25)">£25</button>
+                <button class="quick-amount-btn" onclick="setAmount(50)">£50</button>
+                <button class="quick-amount-btn" onclick="setAmount(100)">£100</button>
+                <button class="quick-amount-btn" onclick="setAmount('')">Other</button>
+            </div>
+
+            <div class="amount-input-container">
+                <span class="currency-symbol">£</span>
+                <input
+                    id="donation-amount"
+                    type="number"
+                    min="1"
+                    step="0.01"
+                    value="10"
+                    placeholder="Enter amount"
+                />
+            </div>
+        </div>
+
+        <button id="checkout-button">
+            <span>💝</span> Donate Now
+        </button>
+
+        <div class="security-note">
+            <svg class="lock-icon" viewBox="0 0 24 24">
+                <path d="M12,17A2,2 0 0,0 14,15C14,13.89 13.1,13 12,13A2,2 0 0,0 10,15A2,2 0 0,0 12,17M18,8A2,2 0 0,1 20,10V20A2,2 0 0,1 18,22H6A2,2 0 0,1 4,20V10C4,8.89 4.9,8 6,8H7V6A5,5 0 0,1 12,1A5,5 0 0,1 17,6V8H18M12,3A3,3 0 0,0 9,6V8H15V6A3,3 0 0,0 12,3Z" />
+            </svg>
+            Secure payment powered by Stripe
+        </div>
+    </div>
+
+    <script>
+        function setAmount(amount) {
+            const input = document.getElementById("donation-amount");
+            input.value = amount;
+            input.focus();
+        }
+
+        document.getElementById("checkout-button").addEventListener("click", () => {
+            const amountInput = document.getElementById("donation-amount");
+            let amount = parseFloat(amountInput.value);
+
+            if (isNaN(amount) || amount < 1) {
+                alert("Please enter a valid donation amount of at least £1.");
+                return;
+            }
+
+            // Convert pounds to pence (smallest currency unit)
+            const amountInPence = Math.round(amount * 100);
+
+            fetch("/create-checkout-session", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ amount: amountInPence }),
+            })
+                .then(res => res.json())
+                .then(data => {
+                    if (data.url) {
+                        window.location.href = data.url;
+                    } else {
+                        alert("Error: " + (data.error || "Failed to create checkout session."));
+                    }
+                })
+                .catch(() => alert("Network error, please try again."));
+        });
+
+        // Add some interactive feedback
+        document.getElementById("donation-amount").addEventListener("input", function(e) {
+            const value = parseFloat(e.target.value);
+            const button = document.getElementById("checkout-button");
+            
+            if (value && value >= 1) {
+                button.innerHTML = `<span>💝</span> Donate £${value.toFixed(2)}`;
+            } else {
+                button.innerHTML = `<span>💝</span> Donate Now`;
+            }
+        });
+    </script>
 {% include 'layouts/footer.html' %}
