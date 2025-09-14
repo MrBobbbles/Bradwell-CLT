@@ -10,62 +10,120 @@
 
 <main class="container mx-auto px-4 py-8">
   {% if project_data %}
-    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-      {% for entry in project_data %}
-        {% set project = entry.project %}
-        {% set images = entry.images %}
-
-        <div class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-xl transition-shadow duration-300">
-
-            <!-- Splide Carousel -->
-            {% if images %}
+    <!-- Finished Projects -->
+    <section class="mb-12">
+      <h3 class="text-2xl font-bold text-gray-800 border-b-2 border-red-500 pb-2 mb-6">
+        ✅ Finished Projects
+      </h3>
+      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+        {% for entry in project_data %}
+          {% if entry.project.finished == true %}
+            {% set project = entry.project %}
+            {% set images = entry.images %}
+            <div class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-xl transition-shadow duration-300">
+              <!-- Images (your Splide code remains the same) -->
+              {% if images %}
                 {% if images|length == 1 %}
-                    <!-- Single Image: show as static image -->
-                    <div class="w-full h-48 bg-gray-200 flex items-center justify-center">
+                  <div class="w-full h-48 bg-gray-200 flex items-center justify-center">
                     <img src="{{images[0]}}" alt="{{ project.title }} image" class="w-full h-48 object-cover" />
-                    </div>
+                  </div>
                 {% else %}
-                    <!-- Multiple images: Splide carousel -->
-                    <div id="splide-{{ project.id }}" class="splide">
-                        <div class="splide__track">
-                            <ul class="splide__list">
-                            {% for img in images %}
-                              <li class="splide__slide">
-                                <img src="{{ img }}" alt="{{ project.title }} image" class="w-full h-48 object-cover">
-                              </li>
-                            {% endfor %}
-                            </ul>
-                        </div>
+                  <div id="splide-{{ project.id }}" class="splide">
+                    <div class="splide__track">
+                      <ul class="splide__list">
+                        {% for img in images %}
+                          <li class="splide__slide">
+                            <img src="{{ img }}" alt="{{ project.title }} image" class="w-full h-48 object-cover">
+                          </li>
+                        {% endfor %}
+                      </ul>
                     </div>
+                  </div>
                 {% endif %}
-            {% else %}
-            <div class="w-full h-48 bg-gray-200 flex items-center justify-center">
-                <span class="text-gray-500 text-sm">No Images Available</span>
-            </div>
-            {% endif %}
+              {% else %}
+                <div class="w-full h-48 bg-gray-200 flex items-center justify-center">
+                  <span class="text-gray-500 text-sm">No Images Available</span>
+                </div>
+              {% endif %}
 
-
-          <!-- Project Details -->
-          <div class="p-4">
-            <h2 class="text-xl font-semibold text-gray-800 mb-2">{{ project.title }}</h2>
-            <div class="flex justify-between items-start gap-4">
-              <p class="text-gray-600 line-clamp-3 flex-grow">
-                {{ project.about if project.about else 'No description available' }}
-              </p>
-              <a href="{{ url_for('main.view_project', project_id=project.id) }}" class="btn">
-                See More
-              </a>
+              <!-- Project Details -->
+              <div class="p-4">
+                <h2 class="text-xl font-semibold text-gray-800 mb-2">{{ project.title }}</h2>
+                <div class="flex justify-between items-start gap-4">
+                  <p class="text-gray-600 line-clamp-3 flex-grow">
+                    {{ project.about if project.about else 'No description available' }}
+                  </p>
+                  <a href="{{ url_for('main.view_project', project_id=project.id) }}" class="btn">
+                    See More
+                  </a>
+                </div>
+              </div>
             </div>
-          </div>
-        </div>
-      {% endfor %}
-    </div>
+          {% endif %}
+        {% endfor %}
+      </div>
+    </section>
+
+    <!-- Ongoing Projects -->
+    <section>
+      <h3 class="text-2xl font-bold text-gray-800 border-b-2 border-blue-500 pb-2 mb-6">
+        🚧 Ongoing Projects
+      </h3>
+      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+        {% for entry in project_data %}
+          {% if entry.project.finished == false %}
+            {% set project = entry.project %}
+            {% set images = entry.images %}
+            <div class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-xl transition-shadow duration-300">
+              <!-- Images (same as above) -->
+              {% if images %}
+                {% if images|length == 1 %}
+                  <div class="w-full h-48 bg-gray-200 flex items-center justify-center">
+                    <img src="{{images[0]}}" alt="{{ project.title }} image" class="w-full h-48 object-cover" />
+                  </div>
+                {% else %}
+                  <div id="splide-{{ project.id }}" class="splide">
+                    <div class="splide__track">
+                      <ul class="splide__list">
+                        {% for img in images %}
+                          <li class="splide__slide">
+                            <img src="{{ img }}" alt="{{ project.title }} image" class="w-full h-48 object-cover">
+                          </li>
+                        {% endfor %}
+                      </ul>
+                    </div>
+                  </div>
+                {% endif %}
+              {% else %}
+                <div class="w-full h-48 bg-gray-200 flex items-center justify-center">
+                  <span class="text-gray-500 text-sm">No Images Available</span>
+                </div>
+              {% endif %}
+
+              <!-- Project Details -->
+              <div class="p-4">
+                <h2 class="text-xl font-semibold text-gray-800 mb-2">{{ project.title }}</h2>
+                <div class="flex justify-between items-start gap-4">
+                  <p class="text-gray-600 line-clamp-3 flex-grow">
+                    {{ project.about if project.about else 'No description available' }}
+                  </p>
+                  <a href="{{ url_for('main.view_project', project_id=project.id) }}" class="btn">
+                    See More
+                  </a>
+                </div>
+              </div>
+            </div>
+          {% endif %}
+        {% endfor %}
+      </div>
+    </section>
   {% else %}
     <div class="text-center py-12">
       <p class="text-gray-600 text-lg">No projects found.</p>
     </div>
   {% endif %}
 </main>
+
 
 <script>
   document.addEventListener('DOMContentLoaded', function () {
