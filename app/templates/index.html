@@ -171,7 +171,7 @@
     <div class="container">
       <h2 class="section-title">FAQ</h2>
       <p>Submit a question to be answered by our team:</p>
-      <form class="signup-form" action="{{ url_for('main.email_form') }}" method="POST">
+      <form class="signup-form" action="{{ url_for('main.faq_form') }}" method="POST">
         <input type="email" name="email" placeholder="Your email address" required>
         <textarea
             name="question"

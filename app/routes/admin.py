@@ -1,4 +1,4 @@
-from flask import Blueprint, jsonify, request, render_template, redirect, url_for, current_app
+from flask import Blueprint, jsonify, request, flash, render_template, redirect, url_for, current_app
 from app.models.user import User
 from flask_login import login_required
 from app import db
@@ -7,7 +7,7 @@ from app.models.project import Project
 from app.models.newsletter import Newsletter
 from app.models.event import Event
 from app.models.info import Info
-from app.models.email import Email
+from app.models.faq import Faq
 
 import uuid
 from werkzeug.utils import secure_filename
@@ -252,7 +252,7 @@ def edit_person(person_id):
 
     return render_template('admin/edit_person.html', person=person)
 
-@admin.route('/admin/add_project', methods=['GET', 'POST'])
+@admin.route('/add_project', methods=['GET', 'POST'])
 def add_project():
     if request.method == 'POST':
         title = request.form.get('title')
@@ -333,8 +333,22 @@ def upload_image():
     return jsonify({'location': file_url})
 
 
-@admin.route('/emails')
-@login_required
-def emails():
-    emails = Email.query.all()
-    return render_template('admin/emails.html', emails = emails)
+@admin.route('/faq')
+def faq():
+    faqs = Faq.query.all()
+    return render_template('admin/faq.html', faqs=faqs)
+
+@admin.route('/faq/<int:faq_id>', methods=['GET', 'POST'])
+def faq_detail(faq_id):
+    faq = Faq.query.get_or_404(faq_id)
+
+    if request.method == 'POST':
+        faq.answer = request.form.get('answer', '').strip()
+        faq.answered = 'answered' in request.form
+        faq.displayed = 'displayed' in request.form
+
+        db.session.commit()
+        flash("FAQ updated successfully.", "success")
+        return redirect(url_for('admin.faq_detail', faq_id=faq.id))
+
+    return render_template('admin/faq_detail.html', faq=faq)

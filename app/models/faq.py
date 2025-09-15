@@ -6,6 +6,7 @@ class Faq(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     email = db.Column(db.String(100), nullable=False)
     question = db.Column(db.String(1027))
+    answer = db.Column(db.String(1027))
     displayed = db.Column(db.Boolean, nullable=False)
     answered = db.Column(db.Boolean, nullable=False)
     

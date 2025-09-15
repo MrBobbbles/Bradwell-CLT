@@ -1,0 +1,35 @@
+{% include 'layouts/admin_header.html' %}
+<div style="margin-top: 100px;" class="container">
+  <h2>FAQ Submissions</h2>
+  <table border="1" cellpadding="8" cellspacing="0" style="width:100%; border-collapse: collapse;">
+    <thead>
+      <tr>
+        <th>Email</th>
+        <th>Question</th>
+        <th>Answered</th>
+        <th>Displayed</th>
+
+      </tr>
+    </thead>
+    <tbody>
+      {% for faq in faqs %}
+      <tr>
+        <td>
+          <a href="{{ url_for('admin.faq_detail', faq_id=faq.id) }}">
+            {{ faq.email }}
+          </a>
+        </td>
+        <td>{{ faq.question[:80] }}{% if faq.question|length > 80 %}...{% endif %}</td>
+        <td>{{ faq.answered }}</td>
+        <td>{{ faq.answered }}</td>
+
+      </tr>
+      {% else %}
+      <tr>
+        <td colspan="3">No FAQ submissions yet.</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% include 'layouts/admin_footer.html' %}
