@@ -166,13 +166,21 @@
     </div>
   </section>
 
-  <!-- Newsletter Sign-up -->
+  <!-- FAQ submit -->
   <section class="newsletter-signup scroll-reveal">
     <div class="container">
-      <h2 class="section-title">Stay Updated</h2>
-      <p>Subscribe to our newsletter to receive updates on our projects and community events.</p>
+      <h2 class="section-title">FAQ</h2>
+      <p>Submit a question to be answered by our team:</p>
       <form class="signup-form" action="{{ url_for('main.email_form') }}" method="POST">
         <input type="email" name="email" placeholder="Your email address" required>
+        <textarea
+            name="question"
+            placeholder="Your question"
+            required
+            class="w-full h-32 p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
+        ></textarea>        
+        <div class="g-recaptcha" data-sitekey="{{ captcha_site_key }}"></div>
+
         <button type="submit" class="btn-secondary">Subscribe</button>
       </form>
     </div>
@@ -180,6 +188,8 @@
 
 {% include 'layouts/footer.html' %}
  
+<script src="https://www.google.com/recaptcha/api.js" async defer></script>
+
 <script>
     // Advanced Scroll Effects for Bradwell Community Land Trust Website
 document.addEventListener('DOMContentLoaded', function() {

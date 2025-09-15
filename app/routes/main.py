@@ -21,7 +21,8 @@ main = Blueprint('main', __name__)
 @main.route('/')
 def home():
     projects = Project.query.all()
-    return render_template('index.html', projects=projects)
+
+    return render_template('index.html', projects=projects, captcha_site_key=os.getenv("CAPTCHA_SITE_KEY"))
 
 @main.route('/about')
 def about():
