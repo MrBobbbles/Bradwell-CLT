@@ -349,6 +349,6 @@ def faq_detail(faq_id):
 
         db.session.commit()
         flash("FAQ updated successfully.", "success")
-        return redirect(url_for('admin.faq_detail', faq_id=faq.id))
+        return redirect(url_for('admin.faq', faq_id=faq.id))
 
     return render_template('admin/faq_detail.html', faq=faq)
