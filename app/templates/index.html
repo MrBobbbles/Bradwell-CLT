@@ -80,30 +80,24 @@
       </div>
     </section>
   {% endif %}
+  
   <!-- Community Impact -->
   <section class="impact-section scroll-reveal">
     <div class="container">
       <h2 class="section-title">Our Impact</h2>
       <div class="impact-stats">
+        
+        {% for stat in stats %}
         <div class="stat-card">
-          <span class="stat-number">9+</span>
-          <p>Years Serving Bradwell</p>
+          <span class="stat-number">{{ stat.value }}</span>
+          <p>{{ stat.text }}</p>
         </div>
-        <div class="stat-card">
-          <span class="stat-number">x+</span>
-          <p>Affordable Homes Created</p>
-        </div>
-        <div class="stat-card">
-          <span class="stat-number">x+</span>
-          <p>Community Members</p>
-        </div>
-        <div class="stat-card">
-          <span class="stat-number">x</span>
-          <p>Major Projects Completed</p>
-        </div>
+        {% endfor %}
+        
       </div>
     </div>
   </section>
+
 
   <!-- Get Involved -->
   <section class="get-involved scroll-reveal">

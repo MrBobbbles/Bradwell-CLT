@@ -12,6 +12,7 @@ from app.models.newsletter import Newsletter
 from app.models.project import Project
 from app.models.event import Event
 from app.models.faq import Faq
+from app.models.stat import Stat
 
 load_dotenv()
 stripe.api_key = os.getenv("STRIPE_KEY")
@@ -63,8 +64,8 @@ RECAPTCHA_ERROR_MESSAGES = {
 @main.route('/')
 def home():
     projects = Project.query.all()
-
-    return render_template('index.html', projects=projects, captcha_site_key=os.getenv("CAPTCHA_SITE_KEY"))
+    stats = Stat.query.all()
+    return render_template('index.html', projects=projects, stats=stats, captcha_site_key=os.getenv("CAPTCHA_SITE_KEY"))
 
 @main.route('/about')
 def about():

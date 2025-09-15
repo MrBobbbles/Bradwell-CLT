@@ -1293,6 +1293,10 @@ iframe{
   }
 }
 
+/* Stats */
+.stats-box {
+  margin-top: 100px
+}
 
 /* view project */
 .project-details{
