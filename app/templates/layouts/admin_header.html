@@ -20,7 +20,7 @@
           </a>      
             <ul class="nav-links">
             <li><a href="{{ url_for('main.home') }}">View site</a></li>
-            <li><a href="{{ url_for('admin.emails') }}">Emails</a></li>
+            <li><a href="{{ url_for('admin.faq') }}">FAQ</a></li>
             <li><a href="{{ url_for('admin.projects') }}">Projects</a></li>
             <li><a href="{{ url_for('admin.events') }}">Events</a></li>
             <li><a href="{{ url_for('admin.newsletters') }}">Newsletters</a></li>
@@ -32,4 +32,13 @@
             <span></span><span></span><span></span>
           </div>
         </nav>
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+              <div class="flash-messages">
+                {% for category, message in messages %}
+                  <div class="alert alert-{{ category }}">{{ message }}</div>
+                {% endfor %}
+              </div>
+            {% endif %}
+          {% endwith %}
       </header>
