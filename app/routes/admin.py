@@ -8,6 +8,7 @@ from app.models.newsletter import Newsletter
 from app.models.event import Event
 from app.models.info import Info
 from app.models.faq import Faq
+from app.models.stat import Stat
 
 import uuid
 from werkzeug.utils import secure_filename
@@ -331,6 +332,57 @@ def upload_image():
 
     file_url = url_for('static', filename=f'images/uploads/{filename}')
     return jsonify({'location': file_url})
+
+@admin.route('/stats')
+def stats():
+    stats = Stat.query.all()
+    return render_template('admin/stats.html', stats=stats)
+
+@admin.route('/stats/new', methods=['GET', 'POST'])
+def new_stat():
+    if request.method == 'POST':
+        text = request.form.get('text')
+        value = request.form.get('value')
+
+        if not text or not value:
+            flash("Please provide both text and value.", "error")
+            return redirect(url_for('admin.new_stat'))
+
+        stat = Stat(text=text, value=value)
+        db.session.add(stat)
+        db.session.commit()
+        flash("Stat added successfully!", "success")
+        return redirect(url_for('admin.stats'))
+
+    return render_template('admin/stat_form.html', stat=None)
+
+@admin.route('/stats/<int:stat_id>/edit', methods=['GET', 'POST'])
+def edit_stat(stat_id):
+    stat = Stat.query.get_or_404(stat_id)
+
+    if request.method == 'POST':
+        text = request.form.get('text')
+        value = request.form.get('value')
+
+        if not text or not value:
+            flash("Please provide both text and value.", "error")
+            return redirect(url_for('admin.edit_stat', stat_id=stat.id))
+
+        stat.text = text
+        stat.value = value
+        db.session.commit()
+        flash("Stat updated successfully!", "success")
+        return redirect(url_for('admin.stats'))
+
+    return render_template('admin/stat_form.html', stat=stat)
+
+@admin.route('/stats/<int:stat_id>/delete', methods=['POST'])
+def delete_stat(stat_id):
+    stat = Stat.query.get_or_404(stat_id)
+    db.session.delete(stat)
+    db.session.commit()
+    flash("Stat deleted successfully!", "success")
+    return redirect(url_for('admin.stats_index'))
 
 
 @admin.route('/faq')
